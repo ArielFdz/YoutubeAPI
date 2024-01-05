@@ -8,9 +8,9 @@ using YoutubeExplode.Videos;
 
 namespace YoutubeAPI.utilities
 {
-    public class AutoMapper : Profile
+    public class AutoMapperProfile : Profile
     {
-        public AutoMapper()
+        public AutoMapperProfile()
         {
             CreateMap<Video, YoutubeDTO>()
                 .ForMember(dest => dest.Autor, opt => opt.MapFrom(src => src.Author));
