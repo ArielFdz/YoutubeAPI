@@ -17,8 +17,9 @@ namespace YoutubeAPI.Controllers
             this.service = service;
         }
 
-        [HttpGet]
+        [HttpGet("metadata")]
         public async Task<ActionResult> m_getMetadataVideo(string _urlVideo){
+
             try
             {
                 var metadata = await service.m_getMetadataVideo(_urlVideo);
@@ -29,6 +30,19 @@ namespace YoutubeAPI.Controllers
                 return StatusCode(500, ex.Message.ToString());
             }
             
+        }
+
+        [HttpGet("buffer")]
+        public async Task<ActionResult> m_getVideoBuffer(string _urlVideo){
+            try
+            {
+                var buffer = await service.m_getVideoBuffer(_urlVideo);
+                return Ok(buffer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message.ToString());
+            }
         }
     }
 }
