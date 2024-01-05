@@ -17,18 +17,52 @@ namespace YoutubeAPI.Controllers
             this.service = service;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> m_getMetadataVideo(string _urlVideo){
+        [HttpGet("metadata")]
+        public async Task<ActionResult> m_getMetadataVideo(string _urlVideo)
+        {
+
             try
             {
                 var metadata = await service.m_getMetadataVideo(_urlVideo);
                 return Ok(metadata);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message.ToString());
             }
-            
+
+        }
+
+        [HttpGet("buffer")]
+        public async Task<ActionResult> m_getVideoBuffer(string _urlVideo)
+        {
+            try
+            {
+                var buffer = await service.m_getVideoBuffer(_urlVideo);
+                return Ok(buffer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message.ToString());
+            }
+        }
+
+        [HttpGet("video")]
+        public async Task<ActionResult> m_downloadVideo(string _urlVideo)
+        {
+            try
+            {
+                var stream = await service.m_downloadVideo(_urlVideo);
+                var metadata = await service.m_getMetadataVideo(_urlVideo);
+                
+                Response.Headers.Add("Content-Disposition", $"attachment; filename=\"{metadata.Title}.mp4\"");
+                
+                return Ok(stream);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message.ToString());
+            }
         }
     }
 }
