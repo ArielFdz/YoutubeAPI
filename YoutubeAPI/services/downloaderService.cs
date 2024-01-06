@@ -36,9 +36,9 @@ namespace YoutubeAPI.Controllers
             }
         }
 
-        public async Task<VideoBuffer> m_getVideoBuffer(string _urlVideo)
+        public async Task<VideoBufferDTO> m_getVideoBuffer(string _urlVideo)
         {
-            var buffer = new VideoBuffer();
+            var buffer = new VideoBufferDTO();
 
             try
             {

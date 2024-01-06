@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace YoutubeAPI.dto
 {
-    public class VideoBuffer
+    public class VideoBufferDTO
     {
         public byte[] buffer { get; set; }
     }
