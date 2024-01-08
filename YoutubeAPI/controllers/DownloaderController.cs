@@ -64,5 +64,23 @@ namespace YoutubeAPI.Controllers
                 return StatusCode(500, ex.Message.ToString());
             }
         }
+
+        [HttpGet("audio")]
+        public async Task<ActionResult> m_downloadAudio(string _urlVideo)
+        {
+            try
+            {
+                var stream = await service.m_downloadAudio(_urlVideo);
+                var metadata = await service.m_getMetadataVideo(_urlVideo);
+                
+                Response.Headers.Add("Content-Disposition", $"attachment; filename=\"{metadata.Title}.mp3\"");
+                
+                return Ok(stream);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message.ToString());
+            }
+        }
     }
 }

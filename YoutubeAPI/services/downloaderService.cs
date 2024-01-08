@@ -81,5 +81,24 @@ namespace YoutubeAPI.Controllers
             }
 
         }
+
+        public async Task<dynamic> m_downloadAudio(string _urlVideo)
+        {
+
+            try
+            {
+                var youtube = new YoutubeClient();
+                var streamManifest = await youtube.Videos.Streams.GetManifestAsync(_urlVideo);
+                var streamInfo = streamManifest.GetAudioOnlyStreams().GetWithHighestBitrate();
+                var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
+
+                return stream;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar procesar la url proporcionada: " + ex.Message.ToString());
+            }
+
+        }
     }
 }
