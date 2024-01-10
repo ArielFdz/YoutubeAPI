@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeAPI", "YoutubeAPI.csproj", "{C75369F9-F0A7-46E1-8216-7E7DD8EEF56F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBot", "..\DiscordBot\DiscordBot.csproj", "{8F0A2AC5-7BA3-4DE4-BDAE-A90F664A17DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C75369F9-F0A7-46E1-8216-7E7DD8EEF56F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C75369F9-F0A7-46E1-8216-7E7DD8EEF56F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C75369F9-F0A7-46E1-8216-7E7DD8EEF56F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F0A2AC5-7BA3-4DE4-BDAE-A90F664A17DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F0A2AC5-7BA3-4DE4-BDAE-A90F664A17DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F0A2AC5-7BA3-4DE4-BDAE-A90F664A17DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F0A2AC5-7BA3-4DE4-BDAE-A90F664A17DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
