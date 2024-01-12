@@ -31,7 +31,7 @@ class Program
 
     public async Task MainAsync()
     {
-        await _client.LoginAsync(TokenType.Bot, "MTE5NDcwNTA3NjQzMDg0Mzk3NA.GMZ5Jg.eVsMWL2XwdTyzT6XepuPNw-3QeLfUOuIEs7JJ0");
+        await _client.LoginAsync(TokenType.Bot, "TOKEN");
 
         await _client.StartAsync();
 
@@ -53,35 +53,64 @@ class Program
 
     private async Task MessageReceivedAsync(SocketMessage message)
     {
-        if (message.Author.Id == _client.CurrentUser.Id)
-            return;
-
-
-        if (message.Content.StartsWith("!metadata"))
+        try
         {
-            string urlVideo = message.Content.Substring("!metadata".Length).Trim();
+            if (message.Author.Id == _client.CurrentUser.Id)
+                return;
 
-            using (HttpClient httpClient = new HttpClient())
+
+            if (message.Content.StartsWith("!download"))
             {
-                HttpResponseMessage response = await httpClient.GetAsync($"https://localhost:7269/api/downloader/video?_urlVideo={urlVideo}");
+                string urlVideo = message.Content.Substring("!download".Length).Trim();
 
-                if (response.IsSuccessStatusCode)
+                using (HttpClient httpClient = new HttpClient())
                 {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    await message.Channel.SendMessageAsync(responseBody);
+                    var response = await httpClient.GetAsync($"http://localhost:5215/api/downloader/video?_urlVideo={urlVideo}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var videoContent = await response.Content.ReadAsStreamAsync();
+                        await message.Channel.SendFileAsync(videoContent, "video.mp4", "Aquí está tu video:");
+                    }
+                    else
+                    {
+                        await message.Channel.SendMessageAsync($"Error al obtener el video: {response.ReasonPhrase}");
+                    }
                 }
-                else
+            }
+            //else if (message.Content == "!ping")
+            //{
+            //    var cb = new ComponentBuilder()
+            //        .WithButton("Click me!", "unique-id", ButtonStyle.Primary);
+            //    await message.Channel.SendMessageAsync("pong!", components: cb.Build());
+            //}
+
+            if (message.Content.StartsWith("!music"))
+            {
+                string urlVideo = message.Content.Substring("!music".Length).Trim();
+
+                using (HttpClient httpClient = new HttpClient())
                 {
-                    await message.Channel.SendMessageAsync($"Error al obtener metadata del video: {response.ReasonPhrase}");
+                    var response = await httpClient.GetAsync($"http://localhost:5215/api/downloader/audio?_urlVideo={urlVideo}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var videoContent = await response.Content.ReadAsStreamAsync();
+                        await message.Channel.SendFileAsync(videoContent, "audio.mp3", "`Aquí está tu audio: `");
+                    }
+                    else
+                    {
+                        await message.Channel.SendMessageAsync($"Error al obtener el video: {response.ReasonPhrase}");
+                    }
                 }
             }
         }
-        else if (message.Content == "!ping")
+        catch (Exception ex)
         {
-            var cb = new ComponentBuilder()
-                .WithButton("Click me!", "unique-id", ButtonStyle.Primary);
-            await message.Channel.SendMessageAsync("pong!", components: cb.Build());
+            await message.Channel.SendMessageAsync($"Error con el bot: {ex.Message}");
         }
+
+        
     }
 
     private async Task InteractionCreatedAsync(SocketInteraction interaction)
